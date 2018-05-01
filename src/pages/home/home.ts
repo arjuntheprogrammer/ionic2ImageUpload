@@ -57,17 +57,18 @@ export class HomePage {
     this.camera.getPicture(options).then((imagePath) => {
       // Special handling for Android library
       if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+        console.log("here inside");
         this.filePath.resolveNativePath(imagePath)
           .then(filePath => {
+            console.log("filePath", filePath);
+
             let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
             let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-            
             this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
           });
       } else {
         var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
         var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        console.log('currentName', currentName);
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
@@ -85,14 +86,11 @@ export class HomePage {
 
   // Copy the image to a local folder
   private copyFileToLocalDir(namePath, currentName, newFileName) {
-    console.log(newFileName);
-    this.lastImage = newFileName;
-    this.uploadImage();
-    // this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
-    //   this.lastImage = newFileName;
-    // }, error => {
-    //   this.presentToast('Error while storing file.');
-    // });
+    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+      this.lastImage = newFileName;
+    }, error => {
+      this.presentToast('Error while storing file.');
+    });
   }
 
   private presentToast(text) {
@@ -116,7 +114,7 @@ export class HomePage {
 
   public uploadImage() {
     // Destination URL
-    var url = "localhost:8000/profiles/imageUpload/";
+    var url = "http://192.168.0.122:9999/profiles/imageUpload/";
 
     // File for Upload
     var targetPath = this.pathForImage(this.lastImage);
@@ -129,8 +127,9 @@ export class HomePage {
       fileName: filename,
       chunkedMode: false,
       mimeType: "multipart/form-data",
-      params: { 'myfile': filename }
+      params: { 'fileName': filename }
     };
+
 
     const fileTransfer: TransferObject = this.transfer.create();
 
@@ -141,7 +140,6 @@ export class HomePage {
 
     // Use the FileTransfer to upload the image
     fileTransfer.upload(targetPath, url, options).then(data => {
-      console.log("data: ",data );
       this.loading.dismissAll()
       this.presentToast('Image succesful uploaded.');
     }, err => {
