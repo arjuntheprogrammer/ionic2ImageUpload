@@ -246,3 +246,27 @@ export class HomePage {
 // Latest Picture:
 // <img[src]="base64Image" * ngIf="base64Image" />
 // </ion-card-content>
+
+
+
+// in django settings
+
+// # overriding max upload size
+// DATA_UPLOAD_MAX_MEMORY_SIZE = 10242880
+
+
+
+// @csrf_exempt
+// def imageUpload(request):
+
+// import base64
+//   from django.core.files.base import ContentFile
+//     data = json.loads(request.body)
+// format, imgstr = data['img'].split(';base64,')
+// ext = format.split('/')[-1]
+// dataIm = ContentFile(base64.b64decode(imgstr), name = 'temp.' + ext)
+// profile = Profile.objects.get(pk = 2)
+// profile.profile_pic = dataIm
+// profile.save()
+
+// return JsonResponse({ "uploaded_file_url": "outside" }, status = 200, safe = False)
