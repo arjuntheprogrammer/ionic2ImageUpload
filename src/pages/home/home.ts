@@ -127,9 +127,8 @@ export class HomePage {
       fileName: filename,
       chunkedMode: false,
       mimeType: "multipart/form-data",
-      params: { 'fileName': filename }
+      params: { 'fileName': filename, 'textData': "sdafsdf" }
     };
-
 
     const fileTransfer: TransferObject = this.transfer.create();
 
@@ -148,3 +147,102 @@ export class HomePage {
     });
   }
 }
+
+
+
+
+
+//////////////////////Image Upload Post Request Extra/////////////////////////////
+
+
+//   public base64Image: string;
+// options: any;
+
+//   public takePicture() {
+//   this.options = {
+//     quality: 100,
+//     sourceType: this.camera.PictureSourceType.CAMERA,
+//     saveToPhotoAlbum: true,
+//     correctOrientation: true,
+//     destinationType: this.camera.DestinationType.DATA_URL,
+//     mediaType: this.camera.MediaType.VIDEO
+//   }
+//   this.camera.getPicture(this.options)
+//     .then((imageData) => {
+//       this.base64Image = "data:image/jpeg;base64," + imageData;
+//       this.uploadImage();
+//     }).then((path) => {
+
+//     })
+// }
+
+
+// pickPicture() {
+
+//   this.camera.getPicture({
+//     destinationType: this.camera.DestinationType.DATA_URL,
+//     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+//     mediaType: this.camera.MediaType.PICTURE
+//   }).then((imageData) => {
+//     // imageData is a base64 encoded string
+//     this.base64Image = "data:image/jpeg;base64," + imageData;
+//     this.uploadImage();
+//   }, (err) => {
+//     console.log(err);
+//   });
+// }
+
+// uploadImage(){
+//   // var url = "http://192.168.0.122:9999/profiles/imageUpload/";
+//   // let seq = this.http.post
+//   // ("http://localhost:8000/profiles/imageUpload/", 
+//   // { "img": this.base64Image, "extra": "extraDataisHere" });
+
+
+//   this.user.uploadPhoto({ "img": this.base64Image, "extra": "extraDataisHere" })
+//     .subscribe((resp) => {
+//       var obj1 = JSON.parse(resp['_body']);
+//       console.log("driver obj:", obj1);
+//     }, (err) => {
+
+//       let toast = this.toastCtrl.create({
+//         message: this.signupErrorString,
+//         duration: 3000,
+//         position: 'top'
+//       });
+//       toast.present();
+//     });
+
+
+// }
+
+
+
+// uploadPhoto(data){
+//   let seq = this.api.post('profiles/imageUpload/', data).share();
+
+//   seq.subscribe((res: any) => {
+//     // If the API returned a successful response, mark the user as logged in
+//     // console.log("result", res);
+//     // if (res.status == 'success') {
+//     //   this._loggedIn(res);
+//     // }
+
+//   }, err => {
+//     console.error('ERROR', err);
+//   });
+
+//   return seq;
+// }
+
+
+
+
+// <ion-card - content >
+// Hello World, this is my camera app
+
+//   < button(click)="takePicture()" > Take a Picture < /button>
+
+// Latest Picture:
+// <img[src]="base64Image" * ngIf="base64Image" />
+// </ion-card-content>
